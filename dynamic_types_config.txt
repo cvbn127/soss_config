@@ -1,0 +1,175 @@
+        typedef float64_36
+          type float64
+          arrayDimensions 36
+
+        typedef uint8_16
+          type byte
+          arrayDimensions 16
+
+        sequence uint8_seq
+          type byte
+
+        sequence int8_seq
+          type char8
+
+        sequence uint32_seq
+          type uint32
+
+        sequence float32_seq
+          type float32
+
+        sequence float64_seq
+          type float64
+
+        struct unique_identifier_msgs__UUID
+          uint8_16 uuid
+
+        struct std_msgs__String
+          string data
+
+        struct builtin_interfaces__Time
+          int32 sec
+          uint32 nanosec          
+
+        struct std_msgs__Header
+          builtin_interfaces__Time stamp
+          string frame_id
+
+        struct geometry_msgs__Vector3
+          float64 x
+          float64 y
+          float64 z
+
+        struct Point
+          float64 x
+          float64 y
+          float64 z
+
+        struct Quaternion
+          float64 x
+          float64 y
+          float64 z
+          float64 w
+
+        struct geometry_msgs__Point32
+          float32 x
+          float32 y
+          float32 z
+        
+        sequence geometry_msgs__Point32_seq
+          type geometry_msgs__Point32
+
+        struct geometry_msgs__Polygon
+          geometry_msgs__Point32_seq points
+
+        struct geometry_msgs__PolygonStamped
+          std_msgs__Header header
+          geometry_msgs__Polygon polygon
+        
+        sequence geometry_msgs__PolygonStamped_seq
+          type geometry_msgs__PolygonStamped
+
+        struct geometry_msgs__Pose
+          Point position
+          Quaternion orientation
+
+        struct geometry_msgs__Twist
+          geometry_msgs__Vector3 linear
+          geometry_msgs__Vector3 angular
+
+        struct geometry_msgs__Accel
+          geometry_msgs__Vector3 linear
+          geometry_msgs__Vector3 angular
+
+        struct geometry_msgs__PoseWithCovariance
+          geometry_msgs__Pose pose
+          float64_36 covariance
+
+        struct geometry_msgs__TwistWithCovariance
+          geometry_msgs__Twist twist
+          float64_36 covariance
+
+        struct nav_msgs__Odometry
+          std_msgs__Header header
+          string child_frame_id
+          geometry_msgs__PoseWithCovariance pose
+          geometry_msgs__TwistWithCovariance twist
+        
+        struct nav_msgs__MapMetaData
+          builtin_interfaces__Time map_load_time
+          float32 resolution
+          uint32 width
+          uint32 height
+          geometry_msgs__Pose origin
+
+        struct nav_msgs__OccupancyGrid
+          std_msgs__Header header
+          nav_msgs__MapMetaData info
+          int8_seq data
+
+        struct gis_rtk_msgs__StopPoint
+          std_msgs__Header header
+          geometry_msgs__Pose pose
+          string stop_reason
+          
+        struct gis_rtk_msgs__PointVelocity
+          geometry_msgs__Pose pose
+          boolean is_key_point
+          boolean return_point
+          boolean confirmation
+          float32 linear_velocity
+          float32 max_deviation
+          float32 delay
+
+        sequence gis_rtk_msgs__PointVelocity_seq
+          type gis_rtk_msgs__PointVelocity
+
+        struct gis_rtk_msgs__PathVelocities
+          std_msgs__Header header
+          gis_rtk_msgs__PointVelocity_seq path_velocities
+          int32 planning_space
+
+        struct action_msgs__GoalInfo
+          unique_identifier_msgs__UUID goal_id
+          builtin_interfaces__Time stamp
+
+        struct shape_msgs__SolidPrimitive
+          byte type
+          float64_seq dimensions
+
+        struct derived_object_msgs__Object
+          std_msgs__Header
+          uint32 id
+          byte detection_level
+          boolean object_classified
+          geometry_msgs__Pose pose
+          geometry_msgs__Twist twist
+          geometry_msgs__Accel accel
+          geometry_msgs__Polygon polygon
+          shape_msgs__SolidPrimitive shape
+          byte classification
+          byte classification_certainty
+          uint32 classification_age
+
+        sequence derived_object_msgs__Object_seq
+          type derived_object_msgs__Object
+
+        struct derived_object_msgs__ObjectArray
+          std_msgs__Header header
+          derived_object_msgs__Object_seq objects
+
+        struct gis_rtk_msgs__PolygonArray
+          std_msgs__Header header
+          geometry_msgs__PolygonStamped_seq polygons
+          uint32_seq labels
+          float32_seq likelihood
+
+        struct sensor_msgs__Image
+          std_msgs__Header header
+          uint32 height
+          uint32 width
+          string encoding
+          byte is_bigendian
+          uint32 step
+          uint8_seq data
+

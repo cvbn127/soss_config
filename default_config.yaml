@@ -1,0 +1,60 @@
+systems:
+  dds:
+    type: dds
+    participant:
+      file_path: /volumes/soss_config/default_fastrtps_profile.xml
+      profile_name: part_profile_name
+      # dds_domain: 120
+    dynamic types:
+      dynamic_type_config: "/volumes/soss_config/dynamic_types_config.txt"
+
+  ros2:
+    type: ros2
+    domain: 120
+
+  static-dds-image:
+    type: static-dds-image
+    participant:
+      file_path: /volumes/soss_config/default_fastrtps_profile.xml
+      profile_name: part_profile_name
+
+routes:
+  ros2_to_dds: { from: ros2, to: dds }
+  dds_to_ros2: { from: dds, to: ros2 }
+
+topics:
+  # Входящие для ГИС РТК (DDS)
+
+  # Текущее положение РТП
+  isns_odometry: { type: "nav_msgs/Odometry", route: ros2_to_dds }
+  
+  # Текущий режим САУ РТП
+  current_state: { type: "unique_identifier_msgs/UUID", route: ros2_to_dds }
+  
+  # Препятствия, обнаруживаемые САУ РТП
+  # object_array: { type: "derived_object_msgs/ObjectArray", route: ros2_to_dds }
+  # object: { type: "derived_object_msgs/Object", route: ros2_to_dds }
+  
+  # Дискретная модель профильной проходимости
+  occupancy_grid: { type: "nav_msgs/OccupancyGrid", route: ros2_to_dds }
+
+  # Место остановки, планируемое САУ РТП
+  stop_point: { type: "gis_rtk_msgs/StopPoint", route: ros2_to_dds }
+  
+  # Траектория движения планируемая САУ РТП 
+  moving_trajectory: { type: "gis_rtk_msgs/PathVelocities", route: ros2_to_dds }
+  
+
+  # Исходящие для ГИС РТК
+
+  # Полигоны запрещённых для движения ("красных") и сквозных ("зелёных") областей карты
+  polygon_array: { type: "gis_rtk_msgs/PolygonArray", route: dds_to_ros2 }
+
+  # Маршрутное задание
+  route_task: { type: "gis_rtk_msgs/PathVelocities", route: dds_to_ros2 }
+
+  # Команда "Старт"/"Пауза"/"Стоп"
+  goal_info: { type: "action_msgs/GoalInfo", route: dds_to_ros2 }
+
+ # image_test: { type: "sensor_msgs/Image", route: ros2_to_static_image }
+ # image_pub: { type: "sensor_msgs/Image", route: static_image_to_ros2 }
